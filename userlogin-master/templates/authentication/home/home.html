@@ -189,74 +189,51 @@
     <br>
     {% if user.is_authenticated %}
     <div class="container-fluid">
-        <form class="selection" action="" method="post">
-            <!-- <div class="form-group">
-            <label for="email">Email address:</label>
-            <input type="email" class="form-control" id="email">
-            </div>
-            <div class="form-group">
-            <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd">
-            </div>
-            <div class="checkbox">
-            <label><input type="checkbox"> Remember me</label>
-            </div> -->
-
-            <div class="form-group" id="1">
-                <label class="form-label" for="semester">Select your semester</label>
-                <select class="form-control" name="semester" id="semester" onchange="populate1(this.id, 'course','2')">
-                    <!-- <option value="1">1</option>
-                    <option value="2">2</option> -->
-                    <option value="" selected>Choose</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                </select>
-            </div>
-
-            <div class="form-group" id="2">
-                <label class="form-label" for="course">Select your course</label>
-                <select class="form-control course" name="course" id="course">
-                    <option value="" selected>Choose your semester first</option>
-                    <!-- <option value="os">OS</option>
-                    <option value="java">Java</option> -->
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label" for="unit">Select the unit you want to view.</label>
-                <select class="form-control" name="unit" id="unit">
-                    <option value="" selected>Choose</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label" for="resource">What do you want to view?</label>
-                <select class="form-control" name="resource" id="resource">
-                    <option value="" selected>Choose</option>
-                    <option value="notes">Notes</option>
-                    <option value="question papers">Question Papers</option>
-                </select>
-            </div>
-
-            <button type="submit" class="btn btn-success">View</button>
-        </form>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+      <div class="mb-3" id="1" style="display: block">
+        <label for="semester">Choose your semester</label>
+        <select class="btn btn-default dropdown-toggle" name="semester" id="semester" onchange="populate1(this.id, 'course','2')">
+          <option value="" selected>Choose</option>
+          <!-- <option value="1">1</option>
+            <option value="2">2</option> -->
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+        </select>
+      </div>
+      <div class="mb-3" id="2">
+        <label for="course">Choose your course</label>
+        <select class="btn btn-default dropdown-toggle" name="course" id="course" onchange="document.getElementById('3').style.display = 'block'"
+          class="form-select"></select>
+      </div>
+      <br>
+      <div class="mb-3" id="3" onchange="document.getElementById('4').style.display = 'block'">
+        <label for="notes">Choose your notes</label>
+        <select class="btn btn-default dropdown-toggle" name="notes" id="notes" class="form-select">
+          <option value="" selected>Choose</option>
+          <option value="notes">Notes</option>
+          <option value="cie">CIE</option>
+          <option value="see">SEE</option>
+        </select>
+      </div>
+      <div class="mb-3" id="5">
+        <!-- <button type="button" class="btn btn-outline-primary">Submit</button> -->
+        <button type="submit" class="btn btn-primary">Find</button>
+      </div>
+    </form>
     </div>
     <div>
             {% for p in data %}
         <div class="customcontainer">
                     <a href="{{p.myfiles.url}}"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/400px-PDF_file_icon.svg.png?20220802235851" alt="Textbook" width="30px"/> </a>
             {{p.myfiles}}
-        {{p.semester}}
+            {{p.semester}}
             {{p.course}}
+            {{p.notes}}
             {{p.display}}
         </div>
 

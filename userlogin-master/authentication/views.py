@@ -10,7 +10,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth import authenticate, login, logout
 from .tokens import generate_token
-from . models import Filedatabase
+from .models import Filedatabase
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
@@ -23,8 +23,15 @@ MESSAGE_TAGS = {
 
 # Create your views here.
 def home(request):
-    data = Filedatabase.objects.all()
-    return render(request, "authentication/home/home.html", {'data': data})
+    if request.method == "POST":
+        semester = request.POST.get("semester")
+        course = request.POST.get("course")
+        notes = request.POST.get("notes")
+        if semester is not None:
+            data = Filedatabase.objects.filter(semester=semester).filter(course=course).filter(notes=notes)
+        print(semester, course, notes)
+        return render(request, "authentication/home/home.html", {'data': data})
+    return render(request, "authentication/home/home.html")
 
 
 def upload(request):
@@ -32,7 +39,7 @@ def upload(request):
 
 
 def send_files(request):
-    if request.method == "POST"  :
+    if request.method == "POST":
         semester = request.POST.get("semester")
         course = request.POST.get("course")
         notes = request.POST.get("notes")
