@@ -30,7 +30,8 @@ def home(request):
         if semester is not None:
             data = Filedatabase.objects.filter(semester=semester).filter(course=course).filter(notes=notes)
         print(semester, course, notes)
-        return render(request, "authentication/home/home.html", {'data': data})
+        return render(request, "authentication/home/home.html",
+                      {'data': data, 'semester': "Semester: "+semester, 'course': "Course: "+course, 'notes': notes})
     return render(request, "authentication/home/home.html")
 
 
